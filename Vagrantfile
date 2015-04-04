@@ -17,11 +17,16 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "provision/playbook.yml"
     ansible.sudo = true
   end
-  
+
+  config.vm.network "private_network", ip: "192.168.50.5"
+  config.vm.hostname = "zimbra.example.com"
   config.vm.network "forwarded_port", guest: 80, host: 10080
   config.vm.network "forwarded_port", guest: 443, host: 10443
   config.vm.network "forwarded_port", guest: 7071, host: 7071
-  config.vm.network "private_network", ip: "192.168.50.5"
-  config.vm.hostname = "zimbra.example.com"
+
+  config.vm.provider "parallels" do |v|
+    v.memory = 4096
+    v.cpus = 4
+  end
 
 end
